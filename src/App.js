@@ -52,7 +52,7 @@ function App() {
       <ImageSearch
         searchText={(text) => setTerm(text)}
       />
-      <div className='container mx-auto px-6'>
+      <div className='container mx-auto px-6 mb-16'>
         {displayImage}
       </div>
     </>
