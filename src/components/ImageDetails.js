@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import OtherImage from './OtherImage';
 
 const ImageDetails = (props) => {
   const [image, setImage] = useState([]);
@@ -24,12 +25,14 @@ const ImageDetails = (props) => {
       Loading...
     </h1>
   );
+  let currentTerm = null;
 
   const onGoBack = () => {
     props.history.goBack();
   };
 
   if (!isLoading) {
+    currentTerm = image.tags[0];
     displayImage = (
       <div className='w-5/6 rounded overflow-hidden shadow-lg mx-auto my-8 flex'>
         <img
@@ -67,7 +70,7 @@ const ImageDetails = (props) => {
           </div>
           <button
             onClick={onGoBack}
-            class='bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mx-6 my-8'
+            className='bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mx-6 my-8'
           >
             Back
           </button>
@@ -90,6 +93,7 @@ const ImageDetails = (props) => {
       <h2 className='text-center text-xl font-semibold mb-4'>
         More like this
       </h2>
+      <OtherImage currentTerm={currentTerm} />
     </>
   );
 };

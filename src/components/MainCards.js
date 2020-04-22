@@ -1,28 +1,7 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
 import ImageCard from './ImageCard';
 
-const OtherImage = ({ currentTerm }) => {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  console.log(currentTerm);
-
-  useEffect(() => {
-    fetch(
-      `https://pixabay.com/api/?key=16152762-55ceae0cfbefc257deed6ec4f&q=${currentTerm}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setImages(data.hits);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  }, [currentTerm]);
-
+function MainCards({ images, isLoading }) {
   let displayImage = (
     <h1 className='text-6xl text-center mx-auto mt-32'>
       Loading...
@@ -52,6 +31,6 @@ const OtherImage = ({ currentTerm }) => {
       {displayImage}
     </div>
   );
-};
+}
 
-export default OtherImage;
+export default MainCards;

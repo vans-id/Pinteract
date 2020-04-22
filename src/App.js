@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter,
+  Route,
+} from 'react-router-dom';
 
-import ImageCard from './components/ImageCard';
+import MainCards from './components/MainCards';
 import ImageSearch from './components/ImageSearch';
+import ImageDetails from './components/ImageDetails';
 
 function App() {
   const [images, setImages] = useState([]);
@@ -23,38 +28,27 @@ function App() {
       });
   }, [term]);
 
-  let displayImage = (
-    <h1 className='text-6xl text-center mx-auto mt-32'>
-      Loading...
-    </h1>
-  );
-
-  if (!isLoading) {
-    displayImage = (
-      <div className='grid grid-cols-4 gap-2'>
-        {images.map((image) => (
-          <ImageCard key={image.id} image={image} />
-        ))}
-      </div>
-    );
-  }
-
-  if (!isLoading && images.length === 0) {
-    displayImage = (
-      <h1 className='text-5xl text-center mx-auto mt-32'>
-        No Images Found
-      </h1>
-    );
-  }
-
   return (
     <>
       <ImageSearch
         searchText={(text) => setTerm(text)}
       />
-      <div className='container mx-auto px-6 mb-16'>
-        {displayImage}
-      </div>
+      <BrowserRouter>
+        <Route
+          path='/'
+          exact
+          component={() => (
+            <MainCards
+              images={images}
+              isLoading={isLoading}
+            />
+          )}
+        />
+        <Route
+          path='/details/:id'
+          component={ImageDetails}
+        />
+      </BrowserRouter>
     </>
   );
 }
