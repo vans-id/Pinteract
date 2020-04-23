@@ -4,9 +4,9 @@ import {
   Route,
 } from 'react-router-dom';
 
-import MainCards from './components/MainCards';
-import ImageSearch from './components/ImageSearch';
-import ImageDetails from './components/ImageDetails';
+import MainCards from './components/MainCards/MainCards';
+import ImageSearch from './containers/ImageSearch/ImageSearch';
+import ImageDetails from './containers/ImageDetails/ImageDetails';
 
 function App() {
   const [images, setImages] = useState([]);
@@ -14,6 +14,7 @@ function App() {
   const [term, setTerm] = useState('');
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(
       `https://pixabay.com/api/?key=16152762-55ceae0cfbefc257deed6ec4f&q=${term}`
     )
@@ -30,10 +31,10 @@ function App() {
 
   return (
     <>
-      <ImageSearch
-        searchText={(text) => setTerm(text)}
-      />
       <BrowserRouter>
+        <ImageSearch
+          searchText={(text) => setTerm(text)}
+        />
         <Route
           path='/'
           exact

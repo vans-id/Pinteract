@@ -1,12 +1,11 @@
 import React from 'react';
-import ImageCard from './ImageCard';
+
+import ImageCard from '../ImageCard/ImageCard';
+import Spinner from '../Spinner/Spinner';
+import NotFound from '../NotFound/NotFound';
 
 function MainCards({ images, isLoading }) {
-  let displayImage = (
-    <h1 className='text-6xl text-center mx-auto mt-32'>
-      Loading...
-    </h1>
-  );
+  let displayImage = <Spinner />;
 
   if (!isLoading) {
     displayImage = (
@@ -19,11 +18,7 @@ function MainCards({ images, isLoading }) {
   }
 
   if (!isLoading && images.length === 0) {
-    displayImage = (
-      <h1 className='text-5xl text-center mx-auto mt-32'>
-        No Images Found
-      </h1>
-    );
+    displayImage = <NotFound />;
   }
 
   return (

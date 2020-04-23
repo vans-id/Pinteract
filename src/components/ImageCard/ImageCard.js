@@ -5,7 +5,7 @@ const ImageCard = ({ image }) => {
   const link = `/details/${image.id}`;
   return (
     <NavLink to={link}>
-      <div className='max-w-sm rounded overflow-hidden shadow-lg'>
+      <div className='max-w-sm rounded overflow-hidden shadow-lg hover:opacity-75'>
         <img
           src={image.webformatURL}
           className='w-full h-full'

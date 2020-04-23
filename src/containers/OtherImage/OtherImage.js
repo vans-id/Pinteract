@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-import ImageCard from './ImageCard';
+import ImageCard from '../../components/ImageCard/ImageCard';
+import Spinner from '../../components/Spinner/Spinner';
+import NotFound from '../../components/NotFound/NotFound';
 
 const OtherImage = ({ currentTerm }) => {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(currentTerm);
-
   useEffect(() => {
+    setIsLoading(true);
     fetch(
       `https://pixabay.com/api/?key=16152762-55ceae0cfbefc257deed6ec4f&q=${currentTerm}`
     )
@@ -23,11 +24,7 @@ const OtherImage = ({ currentTerm }) => {
       });
   }, [currentTerm]);
 
-  let displayImage = (
-    <h1 className='text-6xl text-center mx-auto mt-32'>
-      Loading...
-    </h1>
-  );
+  let displayImage;
 
   if (!isLoading) {
     displayImage = (
@@ -37,14 +34,12 @@ const OtherImage = ({ currentTerm }) => {
         ))}
       </div>
     );
+  } else {
+    displayImage = <Spinner />;
   }
 
   if (!isLoading && images.length === 0) {
-    displayImage = (
-      <h1 className='text-5xl text-center mx-auto mt-32'>
-        No Images Found
-      </h1>
-    );
+    displayImage = <NotFound />;
   }
 
   return (

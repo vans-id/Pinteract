@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
 
-const ImageSearch = ({ searchText }) => {
+const ImageSearch = ({ searchText, history }) => {
   const [text, setText] = useState('');
 
   const onSubmit = (e) => {
+    setText('');
     e.preventDefault();
+    history.push('/');
     searchText(text);
   };
 
   return (
-    <nav className='flex items-center justify-between flex-wrap bg-gray-100 px-6 py-3 mb-6'>
-      <div className='flex items-center flex-shrink-0 text-teal-900 mr-6'>
+    <nav className='flex items-center justify-between flex-wrap bg-teal-100 px-6 py-3 mb-6'>
+      <NavLink
+        to='/'
+        className='flex items-center flex-shrink-0 text-teal-900 mr-6'
+      >
         <svg
           className='fill-current h-8 w-8 mr-2'
           width='54'
@@ -23,15 +29,16 @@ const ImageSearch = ({ searchText }) => {
         <span className='font-semibold text-xl tracking-tight'>
           Pinteract
         </span>
-      </div>
+      </NavLink>
       <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
         <div className='text-sm lg:flex-grow'>
-          <div className='w-5/6 rounded overflow-hidden block lg:inline-block lg:mt-0 text-teal-200'>
+          <div className='w-3/4 rounded overflow-hidden block lg:inline-block lg:mt-0 text-teal-200'>
             <form
               onSubmit={onSubmit}
               className='w-full'
             >
               <div className='flex items-center border border-1 border-teal-500 rounded-full py-2 px-2'>
+                <i className='fas fa-search mx-1'></i>
                 <input
                   type='text'
                   className='appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none'
@@ -39,6 +46,7 @@ const ImageSearch = ({ searchText }) => {
                   onChange={(e) =>
                     setText(e.target.value)
                   }
+                  value={text}
                 />
                 <button
                   className='appearance-none'
@@ -53,4 +61,4 @@ const ImageSearch = ({ searchText }) => {
   );
 };
 
-export default ImageSearch;
+export default withRouter(ImageSearch);

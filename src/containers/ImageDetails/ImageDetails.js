@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import OtherImage from './OtherImage';
+
+import OtherImage from '../OtherImage/OtherImage';
+import Spinner from '../../components/Spinner/Spinner';
+import NotFound from '../../components/NotFound/NotFound';
 
 const ImageDetails = (props) => {
   const [image, setImage] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(
       `https://pixabay.com/api/?key=16152762-55ceae0cfbefc257deed6ec4f&id=${props.match.params.id}`
     )
@@ -20,28 +24,24 @@ const ImageDetails = (props) => {
       });
   }, [props.match.params.id]);
 
-  let displayImage = (
-    <h1 className='text-6xl text-center mx-auto mt-32'>
-      Loading...
-    </h1>
-  );
-  let currentTerm = null;
-
   const onGoBack = () => {
     props.history.goBack();
   };
 
+  let displayImage;
+  let currentTerm = null;
+
   if (!isLoading) {
     currentTerm = image.tags[0];
     displayImage = (
-      <div className='w-5/6 rounded overflow-hidden shadow-lg mx-auto my-8 flex'>
+      <div className='w-5/6 rounded overflow-hidden shadow-xl mx-auto my-8 flex'>
         <img
           src={image.webformatURL}
           className='w-1/2'
         />
-        <div>
-          <div className='px-6 py-4'>
-            <div className='font-semibold text-teal-500 text-4xl mb-2'>
+        <div className='bg-white w-1/2'>
+          <div className='px-8 py-4'>
+            <div className='font-semibold text-teal-500 text-4xl mb-2 '>
               Photo by {image.user}
             </div>
             <ul>
@@ -70,21 +70,19 @@ const ImageDetails = (props) => {
           </div>
           <button
             onClick={onGoBack}
-            className='bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded mx-6 my-8'
+            className='bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg mx-6 my-8'
           >
             Back
           </button>
         </div>
       </div>
     );
+  } else {
+    displayImage = <Spinner />;
   }
 
   if (!isLoading && image.length === 0) {
-    displayImage = (
-      <h1 className='text-5xl text-center mx-auto mt-32'>
-        No Images Found
-      </h1>
-    );
+    displayImage = <NotFound />;
   }
 
   return (
